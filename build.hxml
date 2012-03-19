@@ -1,0 +1,8 @@
+#build file
+-cp src
+-main BracketDemo
+-cp ext/thx/src
+-cp ext/dhx/src
+-cp ext/chrome_fix
+-resource assets/top_albums.txt@top_albums
+-js bin/demo.js
