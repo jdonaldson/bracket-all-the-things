@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<title>Bracket All The Things!</title>
-	
-</head>
+
 <body>
-	<img src="bin/batt.png" width="680" height="511" alt="Batt" style="position:absolute; right:0px; bottom:0px; z-index:-1;">
 	<div id="haxe:trace">
 		
 	</div>
@@ -14,7 +9,8 @@
 		
 	</div>
 	<div>paste a list here:</div>
-
+	<label for="split_view">show split view</label><input type="checkbox" name="split_view" value="checked" id="split_view" >
+	
 		<p><textarea id='input' name="input" rows="20" cols="40">Java
 C
 C#
@@ -65,10 +61,9 @@ Eiffel
 Bash
 Tcl
 PL/I</textarea></p>
-	<p><button id='submit_button'>Continue &rarr;</button></p>
+		<p><button id='submit_button'>Continue &rarr;</button></p>
 
-	<script src="https://raw.github.com/jdonaldson/bracket-all-the-things/master/bin/demo.js" type="text/javascript" charset="utf-8"></script>
-
+	<script src="demo.js" type="text/javascript" charset="utf-8"></script>
 </body>
 
 </html>
