@@ -1299,21 +1299,37 @@ BracketDemo.main = function() {
 		BracketDemo.draw();
 	};
 	dhx.Dom.select("#submit_button").onNode("click",update);
+	dhx.Dom.select("#split_view").onNode("click",update);
 }
 BracketDemo.draw = function() {
+	var show_split = dhx.Dom.select("#split_view").property("checked").get();
 	var values = dhx.Dom.select("#input").property("value").get().split("\n");
 	var split = function(arr) {
-		var home_remainder = new Array();
-		var away_remainder = new Array();
+		var head1 = new Array();
+		var head2 = new Array();
+		var tail1 = new Array();
+		var tail2 = new Array();
+		var j = arr.length - 1;
 		var _g1 = 0, _g = arr.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			if(i % 2 == 0) home_remainder.push(arr[i]); else away_remainder.push(arr[i]);
+			if(j <= i) break;
+			if(i % 2 == 0) {
+				head1.push(arr[i]);
+				tail1.unshift(arr[j]);
+			} else {
+				head2.push(arr[i]);
+				tail2.unshift(arr[j]);
+			}
+			j -= 1;
 		}
-		return [home_remainder,away_remainder];
+		var first = head1.concat(tail1);
+		var second = head2.concat(tail2);
+		if(first.length == 0) return null;
+		if(second.length == 0) return [[first[0]],[first[1]]]; else return [first,second];
 	};
 	var w = Math.log(values.length) / Math.log(2) * 200;
-	var h = values.length / 2 * 30;
+	var h = values.length / 2 * 40;
 	var tree_generator = new thx.geom.layout.Tree().children(function(vs,i) {
 		if(vs == null) return null; else if(vs.length == 1) return null; else return split(vs);
 	}).separation(function(x,i) {
@@ -1324,7 +1340,7 @@ BracketDemo.draw = function() {
 		var nx = n.x;
 		n.x = w - n.y;
 		n.y = nx;
-		if(n.y > h / 2) {
+		if(!Arrays.exists(nodes[1].data,n.data[0]) && show_split) {
 			n.x = w - n.x + w;
 			n.y = h - n.y;
 		}
@@ -1353,7 +1369,9 @@ BracketDemo.draw = function() {
 	var options = divs.selectAll("option").dataf(function(x,i) {
 		if(x.data.length > 1) return [""].concat(x.data); else return x.data;
 	}).enter().append("option").attr("value").stringf(option_f).text().stringf(option_f);
-	var svg_links = dhx.Dom.select("#bracket_output").append("svg:svg").attr("width")["float"](w * 2).attr("height")["float"](h / 2).selectAll("path").data(links).enter().append("svg:path").attr("d").stringf(function(x,i) {
+	var set_height = 0.0;
+	if(show_split) set_height = h / 2 + 40; else set_height = h;
+	var svg_links = dhx.Dom.select("#bracket_output").append("svg:svg").attr("width")["float"](w * 2).attr("height")["float"](set_height).selectAll("path").data(links).enter().append("svg:path").attr("d").stringf(function(x,i) {
 		var x0 = x.source.x, x1 = x.target.x, y0 = x.source.y, y1 = x.target.y;
 		x1 = x.target.x;
 		if(x.target.x > w) x0 = x.source.x + 140; else x1 = x.target.x + 140;
