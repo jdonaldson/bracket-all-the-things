@@ -1,0 +1,6 @@
+[submodule "ext/dhx"]
+	path = ext/dhx
+	url = https://github.com/bigmlcom/dhx
+[submodule "ext/thx"]
+	path = ext/thx
+	url = https://github.com/bigmlcom/thx
