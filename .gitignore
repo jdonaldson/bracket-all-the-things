@@ -1,2 +1,3 @@
 bin/*.js
 .DS_Store
+.tmbuild
